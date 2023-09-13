@@ -175,7 +175,7 @@ export class LegendsBase extends React.Component<ILegendsProps, ILegendState> {
         selectedLegends = {};
       }
     }
-    this.setState({ selectedLegends });
+    this.setState({ selectedLegends }, this._onLegendSelectionChange);
   };
 
   /**
@@ -186,9 +186,9 @@ export class LegendsBase extends React.Component<ILegendsProps, ILegendState> {
 
   private _canSelectOnlySingleLegend = (legend: ILegend): void => {
     if (this.state.selectedLegend === legend.title) {
-      this.setState({ selectedLegend: '' });
+      this.setState({ selectedLegend: '' }, this._onLegendSelectionChange);
     } else {
-      this.setState({ selectedLegend: legend.title });
+      this.setState({ selectedLegend: legend.title }, this._onLegendSelectionChange);
     }
   };
 
@@ -425,4 +425,16 @@ export class LegendsBase extends React.Component<ILegendsProps, ILegendState> {
     }
     return legendColor;
   }
+
+  private _onLegendSelectionChange = () => {
+    if (this.props.onLegendSelectionChange) {
+      let selectedLegends: string[];
+      if (this.props.canSelectMultipleLegends) {
+        selectedLegends = Object.keys(this.state.selectedLegends);
+      } else {
+        selectedLegends = this.state.selectedLegend !== '' ? [this.state.selectedLegend] : [];
+      }
+      this.props.onLegendSelectionChange(selectedLegends);
+    }
+  };
 }

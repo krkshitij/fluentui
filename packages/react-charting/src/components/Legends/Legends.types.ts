@@ -200,6 +200,8 @@ export interface ILegendsProps {
    * and empty the selecetd state legends
    */
   onLegendHoverCardLeave?: VoidFunction;
+
+  onLegendSelectionChange?: (selectedLegends: string[]) => void;
 }
 
 /**
