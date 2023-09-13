@@ -99,6 +99,12 @@ export interface IArcProps {
    * Prop to hide the arc labels
    */
   hideLabels?: boolean;
+
+  activeLegend?: string;
+
+  selectedLegends?: { [key: string]: boolean };
+
+  isLegendSelected?: boolean;
 }
 
 export interface IArcData {

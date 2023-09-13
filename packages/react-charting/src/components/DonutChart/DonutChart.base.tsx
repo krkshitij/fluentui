@@ -23,9 +23,10 @@ export interface IDonutChartState {
   xCalloutValue?: string;
   yCalloutValue?: string;
   focusedArcId?: string;
-  selectedLegend: string;
+  selectedLegends: { [key: string]: boolean };
   dataPointCalloutProps?: IChartDataPoint;
   callOutAccessibilityData?: IAccessibilityProps;
+  isLegendSelected: boolean;
 }
 
 export class DonutChartBase extends React.Component<IDonutChartProps, IDonutChartState> {
@@ -72,8 +73,9 @@ export class DonutChartBase extends React.Component<IDonutChartProps, IDonutChar
       color: '',
       xCalloutValue: '',
       yCalloutValue: '',
-      selectedLegend: '',
+      selectedLegends: {},
       focusedArcId: '',
+      isLegendSelected: false,
     };
     this._hoverCallback = this._hoverCallback.bind(this);
     this._focusCallback = this._focusCallback.bind(this);
@@ -109,7 +111,7 @@ export class DonutChartBase extends React.Component<IDonutChartProps, IDonutChar
     const outerRadius =
       Math.min(this.state._width! - donutMarginHorizontal, this.state._height! - donutMarginVertical) / 2;
     const chartData = points.filter((d: IChartDataPoint) => d.data! > 0);
-    const valueInsideDonut = this._valueInsideDonut(this.props.valueInsideDonut!, chartData!);
+
     return !this._isChartEmpty() ? (
       <div
         className={this._classNames.root}
@@ -134,11 +136,13 @@ export class DonutChartBase extends React.Component<IDonutChartProps, IDonutChar
                 hoverLeaveCallback={this._hoverLeave}
                 uniqText={this._uniqText}
                 onBlurCallback={this._onBlur}
-                activeArc={this._getHighlightedLegend()}
+                activeLegend={this.state.activeLegend}
+                selectedLegends={this.state.selectedLegends}
+                isLegendSelected={this.state.isLegendSelected}
                 focusedArcId={this.state.focusedArcId || ''}
                 href={this.props.href!}
                 calloutId={this._calloutId}
-                valueInsideDonut={this._toLocaleString(valueInsideDonut)}
+                valueInsideDonut={this._toLocaleString(this.props.valueInsideDonut)}
                 theme={this.props.theme!}
                 showLabelsInPercent={this.props.showLabelsInPercent}
                 hideLabels={this.props.hideLabels}
@@ -212,11 +216,7 @@ export class DonutChartBase extends React.Component<IDonutChartProps, IDonutChar
         title: point.legend!,
         color,
         action: () => {
-          if (this.state.selectedLegend === point.legend) {
-            this.setState({ selectedLegend: '' });
-          } else {
-            this.setState({ selectedLegend: point.legend! });
-          }
+          this._onLegendClick(point.legend!);
         },
         hoverAction: () => {
           this._handleChartMouseLeave();
@@ -245,7 +245,7 @@ export class DonutChartBase extends React.Component<IDonutChartProps, IDonutChar
     this._currentHoverElement = element;
     this.setState({
       /** Show the callout if highlighted arc is focused and Hide it if unhighlighted arc is focused */
-      showHover: this.state.selectedLegend === '' || this.state.selectedLegend === data.legend,
+      showHover: !this.state.isLegendSelected || !!this.state.selectedLegends[data.legend!],
       value: data.data!.toString(),
       legend: data.legend,
       color: data.color!,
@@ -263,7 +263,7 @@ export class DonutChartBase extends React.Component<IDonutChartProps, IDonutChar
       this._currentHoverElement = e;
       this.setState({
         /** Show the callout if highlighted arc is hovered and Hide it if unhighlighted arc is hovered */
-        showHover: this.state.selectedLegend === '' || this.state.selectedLegend === data.legend,
+        showHover: !this.state.isLegendSelected || !!this.state.selectedLegends[data.legend!],
         value: data.data!.toString(),
         legend: data.legend,
         color: data.color!,
@@ -287,38 +287,12 @@ export class DonutChartBase extends React.Component<IDonutChartProps, IDonutChar
     this.setState({ showHover: false });
   };
 
-  private _valueInsideDonut(valueInsideDonut: string | number | undefined, data: IChartDataPoint[]) {
-    const highlightedLegend = this._getHighlightedLegend();
-    if (valueInsideDonut !== undefined && highlightedLegend !== '' && !this.state.showHover) {
-      let legendValue = valueInsideDonut;
-      data!.map((point: IChartDataPoint, index: number) => {
-        if (point.legend === highlightedLegend) {
-          legendValue = point.yAxisCalloutData ? point.yAxisCalloutData : point.data!;
-        }
-        return;
-      });
-      return legendValue;
-    } else {
-      return valueInsideDonut;
-    }
-  }
-
   private _toLocaleString(data: string | number | undefined) {
     const localeString = convertToLocaleString(data, this.props.culture);
     if (!localeString) {
       return data;
     }
     return localeString?.toString();
-  }
-
-  /**
-   * This function returns
-   * the selected legend if there is one
-   * or the hovered legend if none of the legends is selected.
-   * Note: This won't work in case of multiple legends selection.
-   */
-  private _getHighlightedLegend() {
-    return this.state.selectedLegend || this.state.activeLegend;
   }
 
   private _isChartEmpty(): boolean {
@@ -343,5 +317,27 @@ export class DonutChartBase extends React.Component<IDonutChartProps, IDonutChar
           return { ...item, color };
         })
       : [];
+  };
+
+  private _onLegendClick = (legend: string) => {
+    const canSelectMultipleLegends = this.props.legendProps ? !!this.props.legendProps.canSelectMultipleLegends : false;
+    let selectedLegends = { ...this.state.selectedLegends };
+    if (canSelectMultipleLegends) {
+      if (selectedLegends[legend]) {
+        delete selectedLegends[legend];
+      } else {
+        selectedLegends[legend] = true;
+        if (Object.keys(selectedLegends).length === this.props.data?.chartData?.length) {
+          selectedLegends = {};
+        }
+      }
+    } else {
+      if (selectedLegends[legend]) {
+        selectedLegends = {};
+      } else {
+        selectedLegends = { [legend]: true };
+      }
+    }
+    this.setState({ selectedLegends, isLegendSelected: Object.keys(selectedLegends).length > 0 });
   };
 }

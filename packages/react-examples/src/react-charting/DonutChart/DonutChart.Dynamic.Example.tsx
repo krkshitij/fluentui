@@ -66,6 +66,7 @@ export class DonutChartDynamicExample extends React.Component<IDonutChartProps, 
           innerRadius={this.state.innerRadius}
           legendProps={{
             allowFocusOnLegends: true,
+            canSelectMultipleLegends: true,
           }}
           hideLabels={this.state.hideLabels}
           showLabelsInPercent={this.state.showLabelsInPercent}

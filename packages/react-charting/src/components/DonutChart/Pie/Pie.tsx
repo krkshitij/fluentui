@@ -50,7 +50,9 @@ export class Pie extends React.Component<IPieProps, {}> {
         onBlurCallback={this.props.onBlurCallback}
         hoverLeaveCallback={this.props.hoverLeaveCallback}
         uniqText={this.props.uniqText}
-        activeArc={this.props.activeArc}
+        activeLegend={this.props.activeLegend}
+        selectedLegends={this.props.selectedLegends}
+        isLegendSelected={this.props.isLegendSelected}
         href={href}
         calloutId={this.props.calloutId}
         valueInsideDonut={this.props.valueInsideDonut}

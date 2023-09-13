@@ -38,8 +38,13 @@ export class Arc extends React.Component<IArcProps, IArcState> {
       theme: this.props.theme!,
     });
     const id = this.props.uniqText! + this.props.data!.data.legend!.replace(/\s+/, '') + this.props.data!.data.data;
-    const opacity: number =
-      this.props.activeArc === this.props.data!.data.legend || this.props.activeArc === '' ? 1 : 0.1;
+    const opacity: number = (
+      this.props.isLegendSelected
+        ? this.props.selectedLegends![this.props.data!.data.legend!]
+        : this.props.activeLegend === this.props.data!.data.legend || this.props.activeLegend === ''
+    )
+      ? 1
+      : 0.1;
     return (
       <g ref={this.currentRef}>
         {!!focusedArcId && focusedArcId === id && (
