@@ -111,7 +111,7 @@ export class DonutChartBase extends React.Component<IDonutChartProps, IDonutChar
     const outerRadius =
       Math.min(this.state._width! - donutMarginHorizontal, this.state._height! - donutMarginVertical) / 2;
     const chartData = points.filter((d: IChartDataPoint) => d.data! > 0);
-
+    const valueInsideDonut = this._valueInsideDonut(this.props.valueInsideDonut!, chartData!);
     return !this._isChartEmpty() ? (
       <div
         className={this._classNames.root}
@@ -142,7 +142,7 @@ export class DonutChartBase extends React.Component<IDonutChartProps, IDonutChar
                 focusedArcId={this.state.focusedArcId || ''}
                 href={this.props.href!}
                 calloutId={this._calloutId}
-                valueInsideDonut={this._toLocaleString(this.props.valueInsideDonut)}
+                valueInsideDonut={this._toLocaleString(valueInsideDonut)}
                 theme={this.props.theme!}
                 showLabelsInPercent={this.props.showLabelsInPercent}
                 hideLabels={this.props.hideLabels}
@@ -286,6 +286,18 @@ export class DonutChartBase extends React.Component<IDonutChartProps, IDonutChar
     this._calloutAnchorPoint = null;
     this.setState({ showHover: false });
   };
+
+  private _valueInsideDonut(valueInsideDonut: string | number | undefined, data: IChartDataPoint[]) {
+    if (valueInsideDonut) {
+      return valueInsideDonut;
+    }
+    if (!this.state.isLegendSelected) {
+      return data.reduce((total, item) => total + item.data!, 0);
+    }
+    return data
+      .filter(item => !!this.state.selectedLegends[item.legend!])
+      .reduce((total, item) => total + item.data!, 0);
+  }
 
   private _toLocaleString(data: string | number | undefined) {
     const localeString = convertToLocaleString(data, this.props.culture);
