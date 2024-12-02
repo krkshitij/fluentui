@@ -14,6 +14,7 @@ import {
   IVerticalStackedChartProps,
   IHeatMapChartData,
   IHeatMapChartDataPoint,
+  IGroupedVerticalBarChartData,
 } from '../../types/IDataPoint';
 import { ISankeyChartProps } from '../SankeyChart/index';
 import { DataVizPalette, getColorFromToken, getNextColor } from '../../utilities/colors';
@@ -23,6 +24,7 @@ import { ILineChartProps } from '../LineChart/index';
 import { IAreaChartProps } from '../AreaChart/index';
 import { IHeatMapChartProps } from '../HeatMapChart/index';
 import { IGaugeChartProps, IGaugeChartSegment } from '../GaugeChart/index';
+import { IGroupedVerticalBarChartProps } from '../GroupedVerticalBarChart/index';
 
 const isDate = (value: any): boolean => !isNaN(Date.parse(value));
 const isNumber = (value: any): boolean => !isNaN(parseFloat(value)) && isFinite(value);
@@ -98,43 +100,74 @@ export const transformPlotlyJsonToDonutProps = (jsonObj: any): IDonutChartProps 
   };
 };
 
-export const transformPlotlyJsonToColumnProps = (jsonObj: any): IVerticalStackedBarChartProps => {
+export const transformPlotlyJsonToVSBCProps = (jsonObj: any): IVerticalStackedBarChartProps => {
   const getColor = UseColorMapping();
   const { data, layout } = jsonObj;
   const mapXToDataPoints: { [key: string]: IVerticalStackedChartProps } = {};
   let yMaxValue = 0;
 
   data.forEach((series: any, index1: number) => {
-    series.x.forEach((x: string | number, index2: number) => {
+    series.x?.forEach((x: string | number, index2: number) => {
+      const { color } = getColor(series.marker?.color, index1);
+      const legend: string = series.name || `Series ${index1 + 1}`;
+
       if (!mapXToDataPoints[x]) {
         mapXToDataPoints[x] = { xAxisPoint: x, chartData: [], lineData: [] };
       }
       if (series.type === 'bar') {
-        const { color } = getColor(series.marker?.color, index1);
         mapXToDataPoints[x].chartData.push({
-          legend: series.name,
-          data: series.y[index2],
+          legend,
+          data: series.y?.[index2],
           color,
         });
       } else if (series.type === 'line') {
-        const { color } = getColor(series.marker?.color, index1);
         mapXToDataPoints[x].lineData!.push({
-          legend: series.name,
-          y: series.y[index2],
+          legend,
+          y: series.y?.[index2],
           color,
         });
       }
-      yMaxValue = Math.max(yMaxValue, series.y[index2]);
+
+      yMaxValue = Math.max(yMaxValue, series.y?.[index2]);
     });
   });
 
   return {
     data: Object.values(mapXToDataPoints),
-    chartTitle: layout.title,
-    // width: layout.width,
-    // height: layout.height,
+    chartTitle: layout?.title,
+    // width: layout?.width,
+    // height: layout?.height,
     barWidth: 'auto',
     yMaxValue,
+  };
+};
+
+// TODO: Add support for continuous x-axis in grouped vertical bar chart
+export const transformPlotlyJsonToGVBCProps = (jsonObj: any): IGroupedVerticalBarChartProps => {
+  const { data, layout } = jsonObj;
+  const mapXToDataPoints: Record<string, IGroupedVerticalBarChartData> = {};
+
+  data.forEach((series: any, index1: number) => {
+    series.x?.forEach((x: string | number, index2: number) => {
+      if (!mapXToDataPoints[x]) {
+        mapXToDataPoints[x] = { name: x.toString(), series: [] };
+      }
+      if (series.type === 'bar') {
+        const legend: string = series.name || `Series ${index1 + 1}`;
+
+        mapXToDataPoints[x].series.push({
+          key: legend,
+          data: series.y?.[index2],
+          color: series.marker?.color || getNextColor(index1),
+          legend,
+        });
+      }
+    });
+  });
+
+  return {
+    data: Object.values(mapXToDataPoints),
+    barwidth: 'auto',
   };
 };
 

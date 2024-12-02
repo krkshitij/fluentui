@@ -5,7 +5,7 @@ import { DonutChart } from '../DonutChart/index';
 import { VerticalStackedBarChart } from '../VerticalStackedBarChart/index';
 import {
   transformPlotlyJsonToDonutProps,
-  transformPlotlyJsonToColumnProps,
+  transformPlotlyJsonToVSBCProps,
   transformPlotlyJsonToScatterChartProps,
   transformPlotlyJsonToHorizontalBarWithAxisProps,
   isDateArray,
@@ -13,6 +13,7 @@ import {
   transformPlotlyJsonToHeatmapProps,
   transformPlotlyJsonToSankeyProps,
   transformPlotlyJsonToGaugeProps,
+  transformPlotlyJsonToGVBCProps,
 } from './PlotlySchemaAdapter';
 import { LineChart } from '../LineChart/index';
 import { HorizontalBarChartWithAxis } from '../HorizontalBarChartWithAxis/index';
@@ -20,6 +21,7 @@ import { AreaChart } from '../AreaChart/index';
 import { HeatMapChart } from '../HeatMapChart/index';
 import { SankeyChart } from '../SankeyChart/SankeyChart';
 import { GaugeChart } from '../GaugeChart/index';
+import { GroupedVerticalBarChart } from '../GroupedVerticalBarChart/index';
 
 export interface Schema {
   /**
@@ -75,7 +77,10 @@ export const DeclarativeChart: React.FunctionComponent<DeclarativeChartProps> = 
       if (orientation === 'h') {
         return <HorizontalBarChartWithAxis {...transformPlotlyJsonToHorizontalBarWithAxisProps(plotlySchema)} />;
       } else {
-        return <VerticalStackedBarChart {...transformPlotlyJsonToColumnProps(plotlySchema)} />;
+        if (['group', 'overlay'].includes(plotlySchema?.layout?.barmode)) {
+          return <GroupedVerticalBarChart {...transformPlotlyJsonToGVBCProps(plotlySchema)} />;
+        }
+        return <VerticalStackedBarChart {...transformPlotlyJsonToVSBCProps(plotlySchema)} />;
       }
     case 'scatter':
       const isAreaChart = plotlySchema.data.some((series: any) => series.fill === 'tonexty');
@@ -85,7 +90,7 @@ export const DeclarativeChart: React.FunctionComponent<DeclarativeChartProps> = 
         }
         return <LineChart {...transformPlotlyJsonToScatterChartProps(plotlySchema, false)} />;
       }
-      return <VerticalStackedBarChart {...transformPlotlyJsonToColumnProps(plotlySchema)} />;
+      return <VerticalStackedBarChart {...transformPlotlyJsonToVSBCProps(plotlySchema)} />;
     case 'heatmap':
       return <HeatMapChart {...transformPlotlyJsonToHeatmapProps(plotlySchema)} />;
     case 'sankey':
