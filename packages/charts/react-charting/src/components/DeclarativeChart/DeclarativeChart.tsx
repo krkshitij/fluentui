@@ -56,6 +56,11 @@ export interface DeclarativeChartProps extends React.RefAttributes<HTMLDivElemen
   onSchemaChange?: (eventData: Schema) => void;
 }
 
+const useColorMapping = () => {
+  const colorMap = React.useRef(new Map<string, string>());
+  return colorMap;
+};
+
 /**
  * DeclarativeChart component.
  * {@docCategory DeclarativeChart}
@@ -68,14 +73,17 @@ export const DeclarativeChart: React.FunctionComponent<DeclarativeChartProps> = 
   const xValues = plotlySchema.data[0].x;
   const isXDate = isDateArray(xValues);
   const isXNumber = isNumberArray(xValues);
+  const colorMap = useColorMapping();
 
   switch (plotlySchema.data[0].type) {
     case 'pie':
-      return <DonutChart {...transformPlotlyJsonToDonutProps(plotlySchema)} />;
+      return <DonutChart {...transformPlotlyJsonToDonutProps(plotlySchema, colorMap)} />;
     case 'bar':
       const orientation = plotlySchema.data[0].orientation;
       if (orientation === 'h') {
-        return <HorizontalBarChartWithAxis {...transformPlotlyJsonToHorizontalBarWithAxisProps(plotlySchema)} />;
+        return (
+          <HorizontalBarChartWithAxis {...transformPlotlyJsonToHorizontalBarWithAxisProps(plotlySchema, colorMap)} />
+        );
       } else {
         if (['group', 'overlay'].includes(plotlySchema?.layout?.barmode)) {
           return <GroupedVerticalBarChart {...transformPlotlyJsonToGVBCProps(plotlySchema)} />;
@@ -86,18 +94,18 @@ export const DeclarativeChart: React.FunctionComponent<DeclarativeChartProps> = 
       const isAreaChart = plotlySchema.data.some((series: any) => series.fill === 'tonexty');
       if (isXDate || isXNumber) {
         if (isAreaChart) {
-          return <AreaChart {...transformPlotlyJsonToScatterChartProps(plotlySchema, true)} />;
+          return <AreaChart {...transformPlotlyJsonToScatterChartProps(plotlySchema, true, colorMap)} />;
         }
-        return <LineChart {...transformPlotlyJsonToScatterChartProps(plotlySchema, false)} />;
+        return <LineChart {...transformPlotlyJsonToScatterChartProps(plotlySchema, false, colorMap)} />;
       }
-      return <VerticalStackedBarChart {...transformPlotlyJsonToVSBCProps(plotlySchema)} />;
+      return <VerticalStackedBarChart {...transformPlotlyJsonToVSBCProps(plotlySchema, colorMap)} />;
     case 'heatmap':
       return <HeatMapChart {...transformPlotlyJsonToHeatmapProps(plotlySchema)} />;
     case 'sankey':
-      return <SankeyChart {...transformPlotlyJsonToSankeyProps(plotlySchema)} />;
+      return <SankeyChart {...transformPlotlyJsonToSankeyProps(plotlySchema, colorMap)} />;
     case 'indicator':
       if (plotlySchema?.data?.[0]?.mode?.includes('gauge')) {
-        return <GaugeChart {...transformPlotlyJsonToGaugeProps(plotlySchema)} />;
+        return <GaugeChart {...transformPlotlyJsonToGaugeProps(plotlySchema, colorMap)} />;
       }
       return <div>Unsupported Schema</div>;
     default:
