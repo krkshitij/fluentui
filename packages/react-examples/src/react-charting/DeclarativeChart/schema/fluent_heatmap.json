@@ -4,7 +4,7 @@
     {
       "type": "heatmap",
       "x": [
-        "x_0",
+        "<img onerror='alert(\"hello 1\");' src='invalid-image' />",
         "x_1",
         "x_2",
         "x_3",
@@ -26,7 +26,7 @@
         "x_19"
       ],
       "y": [
-        "y_0",
+        "<img onerror='alert(\"hello 2\");' src='invalid-image' />",
         "y_1",
         "y_2",
         "y_3",
@@ -192,7 +192,7 @@
       "bgcolor": "#F5F6F9"
     },
     "xaxis1": {
-      "title": "",
+      "title": "<img onerror='alert(\"hello 3\");' src='invalid-image' />",
       "tickfont": {
         "color": "#4D5663"
       },
@@ -203,7 +203,7 @@
       "zerolinecolor": "#E1E5ED"
     },
     "yaxis1": {
-      "title": "",
+      "title": "<img onerror='alert(\"hello 4\");' src='invalid-image' />",
       "tickfont": {
         "color": "#4D5663"
       },

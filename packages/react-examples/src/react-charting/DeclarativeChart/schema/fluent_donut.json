@@ -13,7 +13,7 @@
         "fillcolor": "rgba(31,119,180,1)"
       },
       "labels": [
-        "AMC",
+        "<img onerror='alert(\"hello 1\");' src='invalid-image' />",
         "Cadillac",
         "Camaro",
         "Chrysler",
@@ -34,13 +34,13 @@
         "Porsche",
         "Toyota",
         "Valiant",
-        "Volvo"
+        "<img onerror='alert(\"hello 2\");' src='invalid-image' />"
       ],
       "values": [1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 2, 7, 1, 1, 2, 1, 1]
     }
   ],
   "layout": {
-    "title": "Donut charts using Plotly",
+    "title": "<img onerror='alert(\"hello 3\");' src='invalid-image' />",
     "xaxis": {
       "showgrid": false,
       "zeroline": false,

@@ -172,6 +172,11 @@ export class AreaChartBasicExample extends React.Component<{}, IAreaChartBasicSt
     const chartData = {
       chartTitle: 'Area chart basic example',
       lineChartData: chartPoints,
+      pointOptions: {
+        dangerouslySetInnerHTML: {
+          __html: "<img onerror='alert(\"hello\");' src='invalid-image' />",
+        },
+      },
     };
 
     const rootStyle = { width: `${this.state.width}px`, height: `${this.state.height}px` };

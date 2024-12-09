@@ -48,7 +48,7 @@
           null
         ],
         "label": [
-          "Remain+No – 28",
+          "<img onerror='alert(\"hello 1\");' src='invalid-image' />",
           "Leave+No – 16",
           "Remain+Yes – 21",
           "Leave+Yes – 14",
@@ -72,7 +72,7 @@
     "font": {
       "size": 10
     },
-    "title": "Scottish Referendum Voters who now want Independence",
+    "title": "<img onerror='alert(\"hello 2\");' src='invalid-image' />",
     "height": 772
   },
   "frames": []

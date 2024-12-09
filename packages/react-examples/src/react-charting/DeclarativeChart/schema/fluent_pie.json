@@ -15,7 +15,12 @@
       },
       "textinfo": "value",
       "hoverinfo": "label+percent",
-      "labels": ["Oxygen", "Hydrogen", "Carbon_Dioxide", "Nitrogen"],
+      "labels": [
+        "<img onerror='alert(\"hello 1\");' src='invalid-image' />",
+        "Hydrogen",
+        "Carbon_Dioxide",
+        "<img onerror='alert(\"hello 2\");' src='invalid-image' />"
+      ],
       "values": [4500, 2500, 1053, 500]
     }
   ],

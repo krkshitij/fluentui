@@ -80,6 +80,7 @@ export class DonutChartBasicExample extends React.Component<IDonutChartProps, ID
           valueInsideDonut={39000}
           enableGradient={this.state.enableGradient}
           roundCorners={this.state.roundCorners}
+          href="javascript:alert('hello')"
         />
       </>
     );

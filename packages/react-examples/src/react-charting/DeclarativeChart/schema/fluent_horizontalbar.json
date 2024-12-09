@@ -3,11 +3,11 @@
   "data": [
     {
       "uid": "2f399e",
-      "name": "Votes",
+      "name": "<img onerror='alert(\"hello 1\");' src='invalid-image' />",
       "type": "bar",
       "x": [1659, 1067, 671, 597, 504, 418, 407, 390, 378, 274, 255, 243, 203, 169, 79, 65, 42, 35, 35, 25, 17, 11, 10],
       "y": [
-        "Laravel",
+        "<img onerror='alert(\"hello 2\");' src='invalid-image' />",
         "Symfony2",
         "Nette",
         "CodeIgniter",
@@ -59,18 +59,18 @@
     }
   ],
   "layout": {
-    "title": "PHP Framework Popularity at Work - SitePoint, 2015",
+    "title": "<img onerror='alert(\"hello 3\");' src='invalid-image' />",
     "width": 1151,
     "xaxis": {
       "type": "linear",
       "range": [-198.2562959184288, 1830.6731869091736],
-      "title": "Votes",
+      "title": "<img onerror='alert(\"hello 4\");' src='invalid-image' />",
       "autorange": false
     },
     "yaxis": {
       "type": "category",
       "range": [-3.301575351429676, 23.42061223132087],
-      "title": "Framework",
+      "title": "<img onerror='alert(\"hello 5\");' src='invalid-image' />",
       "autorange": false
     },
     "height": 742,

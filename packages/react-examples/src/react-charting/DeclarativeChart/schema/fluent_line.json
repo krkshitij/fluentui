@@ -7,7 +7,7 @@
         "width": "1.3"
       },
       "mode": "lines",
-      "name": "Trace 0",
+      "name": "<img onerror='alert(\"hello 1\");' src='invalid-image' />",
       "type": "scatter",
       "x": [
         "2015-01-01",
@@ -140,7 +140,7 @@
         "width": "1.3"
       },
       "mode": "lines",
-      "name": "Trace 1",
+      "name": "<img onerror='alert(\"hello 2\");' src='invalid-image' />",
       "type": "scatter",
       "x": [
         "2015-01-01",
@@ -273,7 +273,7 @@
         "width": "1.3"
       },
       "mode": "lines",
-      "name": "Trace 2",
+      "name": "<img onerror='alert(\"hello 3\");' src='invalid-image' />",
       "type": "scatter",
       "x": [
         "2015-01-01",
@@ -409,7 +409,7 @@
       "bgcolor": "#F5F6F9"
     },
     "xaxis1": {
-      "title": "",
+      "title": "<img onerror='alert(\"hello 4\");' src='invalid-image' />",
       "tickfont": {
         "color": "#4D5663"
       },
@@ -420,7 +420,7 @@
       "zerolinecolor": "#E1E5ED"
     },
     "yaxis1": {
-      "title": "Price",
+      "title": "<img onerror='alert(\"hello 5\");' src='invalid-image' />",
       "tickfont": {
         "color": "#4D5663"
       },
@@ -429,7 +429,7 @@
       "titlefont": {
         "color": "#4D5663"
       },
-      "tickprefix": "$",
+      "tickprefix": "<img onerror='alert(\"hello 6\");' src='invalid-image' />",
       "zerolinecolor": "#E1E5ED"
     },
     "plot_bgcolor": "#F5F6F9",

@@ -8,7 +8,7 @@
         "width": "1.3"
       },
       "mode": "lines",
-      "name": "a",
+      "name": "<img onerror='alert(\"hello 1\");' src='invalid-image' />",
       "type": "scatter",
       "x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       "y": [
@@ -24,7 +24,7 @@
         "width": "1.3"
       },
       "mode": "lines",
-      "name": "b",
+      "name": "<img onerror='alert(\"hello 2\");' src='invalid-image' />",
       "type": "scatter",
       "x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       "y": [
@@ -40,7 +40,7 @@
         "width": "1.3"
       },
       "mode": "lines",
-      "name": "c",
+      "name": "<img onerror='alert(\"hello 3\");' src='invalid-image' />",
       "type": "scatter",
       "x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       "y": [
@@ -56,7 +56,7 @@
         "width": "1.3"
       },
       "mode": "lines",
-      "name": "d",
+      "name": "<img onerror='alert(\"hello 4\");' src='invalid-image' />",
       "type": "scatter",
       "x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       "y": [
@@ -74,7 +74,7 @@
       "bgcolor": "#F5F6F9"
     },
     "xaxis1": {
-      "title": "",
+      "title": "<img onerror='alert(\"hello 5\");' src='invalid-image' />",
       "tickfont": {
         "color": "#4D5663"
       },
@@ -85,7 +85,7 @@
       "zerolinecolor": "#E1E5ED"
     },
     "yaxis1": {
-      "title": "",
+      "title": "<img onerror='alert(\"hello 6\");' src='invalid-image' />",
       "tickfont": {
         "color": "#4D5663"
       },

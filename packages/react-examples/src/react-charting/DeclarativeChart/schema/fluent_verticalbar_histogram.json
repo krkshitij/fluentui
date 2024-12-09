@@ -3,7 +3,7 @@
   "data": [
     {
       "uid": "a58c38f5-f6a6-4b4d-8f94-07e5434e2063",
-      "name": "a",
+      "name": "<img onerror='alert(\"hello 1\");' src='invalid-image' />",
       "type": "histogram",
       "x": [
         1.7992564437777885, 0.05779580359302183, 1.5134306451845885, 0.3914013884637312, -0.11969533034200497,
@@ -221,7 +221,7 @@
     },
     {
       "uid": "0da57950-be2f-49b6-a792-f5f8d19f98c8",
-      "name": "b",
+      "name": "<img onerror='alert(\"hello 2\");' src='invalid-image' />",
       "type": "histogram",
       "x": [
         0.24717017471150998, 0.6508904445322543, -0.8150211824679685, 0.15253966266018137, -1.822991097914981,
@@ -439,7 +439,7 @@
     },
     {
       "uid": "bca37da1-d2b1-4232-852f-692208ab0ddc",
-      "name": "c",
+      "name": "<img onerror='alert(\"hello 3\");' src='invalid-image' />",
       "type": "histogram",
       "x": [
         -1.3721691025663127, -0.055559399376507335, -1.5268281942267183, -2.3068542674634456, -1.634184001814117,
@@ -667,7 +667,7 @@
         "font": {
           "color": "#4D5663"
         },
-        "text": ""
+        "text": "<img onerror='alert(\"hello 4\");' src='invalid-image' />"
       },
       "showgrid": true,
       "tickfont": {
@@ -681,7 +681,7 @@
         "font": {
           "color": "#4D5663"
         },
-        "text": ""
+        "text": "<img onerror='alert(\"hello 5\");' src='invalid-image' />"
       },
       "showgrid": true,
       "tickfont": {
