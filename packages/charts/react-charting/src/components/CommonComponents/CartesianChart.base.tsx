@@ -1091,12 +1091,13 @@ export class CartesianChartBase
     }
     if (this.props.yAxisTitle !== undefined && this.props.yAxisTitle !== '') {
       this.margins.left! += TITLE_MARGIN_HORIZONTAL;
+      this.margins.right! += TITLE_MARGIN_HORIZONTAL;
     }
     if (this.props.secondaryYAxistitle !== undefined && this.props.secondaryYAxistitle !== '') {
       this.margins.right! += TITLE_MARGIN_HORIZONTAL;
     }
     if (this.props.xAxisAnnotation !== undefined && this.props.xAxisAnnotation !== '') {
-      this.margins.bottom! += TITLE_MARGIN_VERTICAL;
+      this.margins.top! += TITLE_MARGIN_VERTICAL;
     }
     if (
       this.props.yAxisAnnotation !== undefined &&
