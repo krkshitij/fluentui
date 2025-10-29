@@ -496,6 +496,11 @@ export class CartesianChartBase
       this.margins.top! -
       this._removalValueForTextTuncate -
       this.titleMargin;
+    const yAxisTitleCenterY = this.margins.top! + this.titleMargin - 0.5 + yAxisTitleMaximumAllowedHeight / 2;
+    const yAxisTitleCenterX = this._isRtl ? svgDimensions.width - this.titleMargin * 4.5 : this.titleMargin * 3;
+    const secondaryYAxisTitleCenterX = this._isRtl
+      ? this.titleMargin * 3
+      : svgDimensions.width - this.titleMargin * 4.5;
 
     const commonSvgToolTipProps: ISVGTooltipTextProps = {
       wrapContent,
@@ -612,15 +617,10 @@ export class CartesianChartBase
                   <SVGTooltipText
                     content={this.props.secondaryYAxistitle}
                     textProps={{
-                      x: (yAxisTitleMaximumAllowedHeight - this.margins.bottom!) / 2 + this._removalValueForTextTuncate,
-                      y: this._isRtl ? -this.titleMargin : svgDimensions.width - this.margins.right!,
+                      x: secondaryYAxisTitleCenterX,
+                      y: yAxisTitleCenterY,
                       textAnchor: 'middle',
-                      transform: `translate(${
-                        this._isRtl
-                          ? this.margins.right! / 2 - this.titleMargin
-                          : this.margins.right! / 2 + this.titleMargin
-                      },
-                   ${svgDimensions.height - this.margins.bottom! - this.margins.top! - this.titleMargin})rotate(-90)`,
+                      transform: `rotate(-90, ${secondaryYAxisTitleCenterX}, ${yAxisTitleCenterY})`,
                       className: this._classNames.axisTitle!,
                       'aria-hidden': true,
                     }}
@@ -635,13 +635,10 @@ export class CartesianChartBase
               <SVGTooltipText
                 content={this.props.yAxisTitle}
                 textProps={{
-                  x: (yAxisTitleMaximumAllowedHeight - this.margins.bottom!) / 2 + this._removalValueForTextTuncate,
-                  y: this._isRtl
-                    ? svgDimensions.width - this.margins.right! / 2 + this.titleMargin
-                    : this.margins.left! / 2 - this.titleMargin,
+                  x: yAxisTitleCenterX,
+                  y: yAxisTitleCenterY,
                   textAnchor: 'middle',
-                  transform: `translate(0,
-                   ${svgDimensions.height - this.margins.bottom! - this.margins.top! - this.titleMargin})rotate(-90)`,
+                  transform: `rotate(-90, ${yAxisTitleCenterX}, ${yAxisTitleCenterY})`,
                   className: this._classNames.axisTitle!,
                   'aria-hidden': true,
                 }}
@@ -655,15 +652,10 @@ export class CartesianChartBase
                 <SVGTooltipText
                   content={this.props.yAxisAnnotation}
                   textProps={{
-                    x: (yAxisTitleMaximumAllowedHeight - this.margins.bottom!) / 2 + this._removalValueForTextTuncate,
-                    y: this._isRtl ? -this.titleMargin : svgDimensions.width - this.margins.right!,
+                    x: secondaryYAxisTitleCenterX,
+                    y: yAxisTitleCenterY,
                     textAnchor: 'middle',
-                    transform: `translate(${
-                      this._isRtl
-                        ? this.margins.right! / 2 - this.titleMargin
-                        : this.margins.right! / 2 + this.titleMargin
-                    },
-                   ${svgDimensions.height - this.margins.bottom! - this.margins.top! - this.titleMargin})rotate(-90)`,
+                    transform: `rotate(-90, ${secondaryYAxisTitleCenterX}, ${yAxisTitleCenterY})`,
                     className: this._classNames.axisAnnotation!,
                     'aria-hidden': true,
                   }}
